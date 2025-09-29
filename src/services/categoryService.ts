@@ -12,14 +12,24 @@ type subCategory = {
     image_url: string,
 }
 
-let Category:category[] = [
+type netWorkDataType = {
+    id: number,
+    title: string,
+    price: number,
+    description: string,
+    category: string,
+    image: string,
+    rating?: { rate: number, count: number }
+}
+
+const Category:category[] = [
     {id_category: 1, category_name: 'Bags'},
     {id_category: 2, category_name: 'Travel'},
-    {id_category: 3, category_name: 'Accessries'},
+    {id_category: 3, category_name: 'Accessories'},
     {id_category: 4, category_name: 'Gifting'},
 ];
 
-let SubCategory:subCategory[] = [
+const SubCategory:subCategory[] = [
     {id_sub_category: 1, id_category: 1, sub_category_name: "All Bags", image_url: '/icons/bag1.png'},
     {id_sub_category: 2, id_category: 1, sub_category_name: "Vanity Pouch", image_url: '/icons/bag2.png'},
     {id_sub_category: 3, id_category: 1, sub_category_name: "Tote Bag", image_url: '/icons/bag3.png'},
@@ -37,10 +47,10 @@ export async function updateCategorySubCategoryByNetwork() {
     let totalCategory = Category.length;
     let totalSubCategory = SubCategory.length;
     try {
-        let res = await api.get("/products");
+        const res = await api.get("/products");
         if (res.status == 200 && res.data && res.data.length > 0) {
             const networkData = res.data;
-            networkData.map((cat:any)=>{
+            networkData.map((cat:netWorkDataType)=>{
                 if (!Category.find((val)=> val.category_name == cat.category)) {
                     totalCategory++;
                     totalSubCategory++;
@@ -50,13 +60,14 @@ export async function updateCategorySubCategoryByNetwork() {
             })
             return 0;
         }
-    } catch(error:any) {
-        if (error.response) {
-            console.log("Server error:", error.response.status);
-        } else if (error.request) {
-            console.log("No response received. Network issue or server down.");
-        } else {
+    } catch(error: unknown) {
+        if (error instanceof Error) {
             console.log("Error:", error.message);
+        } else if (typeof error === "object" && error !== null && "response" in error) {
+            const axiosError = error as { response?: { status: number } };
+            console.log("Server error:", axiosError.response?.status);
+        } else {
+            console.log("Unknown error:", error);
         }
     }
 }

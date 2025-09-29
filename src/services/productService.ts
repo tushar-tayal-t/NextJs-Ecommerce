@@ -44,7 +44,7 @@ const products:Product[] = [
 export async function updateProductsFromNetwork() {
     let totalProduct = products.length;
     try {
-        let res = await api.get("/products");
+        const res = await api.get("/products");
         if (res.status == 200 && res.data && res.data.length > 0) {
             const networkData = res.data;
             for (const ele of networkData) {
@@ -55,13 +55,14 @@ export async function updateProductsFromNetwork() {
               }
             }
         }
-    } catch(error:any) {
-        if (error.response) {
-            console.log("Server error:", error.response.status);
-        } else if (error.request) {
-            console.log("No response received. Network issue or server down.");
-        } else {
+    } catch(error: unknown) {
+        if (error instanceof Error) {
             console.log("Error:", error.message);
+        } else if (typeof error === "object" && error !== null && "response" in error) {
+            const axiosError = error as { response?: { status: number } };
+            console.log("Server error:", axiosError.response?.status);
+        } else {
+            console.log("Unknown error:", error);
         }
     }
 }

@@ -11,15 +11,14 @@ type subCategoryObjType = {
 }
 type SubCateogyType = {
     category?: string,
-    categoryId?: number,
     subCategories: subCategoryObjType[]
 }
 
-export default function ClientCategoryElement({category, categoryId, subCategories }: SubCateogyType) {
-  if (!category) return <p>Category not found</p>;
+export default function ClientCategoryElement({category, subCategories }: SubCateogyType) {
   const pathname = usePathname();
+  if (!category) return <p>Category not found</p>;
   const segments = pathname.split("/").filter(Boolean);
-  let activeSubCategory = decodeURIComponent(segments[2]);
+  const activeSubCategory = decodeURIComponent(segments[2]);
   return (
     <div className="w-screen flex justify-center">
       <div 

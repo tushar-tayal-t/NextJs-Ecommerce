@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 export default function Home(){
     return <>
   <section className="flex flex-col justify-center items-center text-center px-6 py-20 lg:py-32 bg-gradient-to-r from-blue-600 to-red-500">

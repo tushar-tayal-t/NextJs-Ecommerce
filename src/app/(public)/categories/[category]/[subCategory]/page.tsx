@@ -19,7 +19,7 @@ export default async function CategoryPage({ params }: { params: { category: str
   }
   return (<>
       <div className="flex justify-center">
-        <ClientSubCategory category = {category} categoryId={categoryId} subCategories={subCategories} />
+        <ClientSubCategory category = {category} subCategories={subCategories} />
       </div>
       <div className="my-3 lg:my-5 lg:p-10"> 
         <ClientProductList products = {categorySubCategoryProducts}/>
