@@ -66,7 +66,7 @@ export default function NavbarClient({ categories }: { categories: any[] }) {
           </div>
         </div>
       )}   
-      <div className="mt-5 lg:ms-10 lg:text-xl">{segments[1]} &raquo; {decodeURIComponent(segments[2])}</div>
+      <div className="mt-5 lg:ms-10 lg:text-xl">{decodeURIComponent(segments[1])} &raquo; {decodeURIComponent(segments[2])}</div>
     </header>
   );
 }
