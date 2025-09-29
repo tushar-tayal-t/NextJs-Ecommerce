@@ -2,24 +2,23 @@
 Ecommerce home landing page
 
 ## Project Description
-This is free time next js project don't judge my skills based on this project
+This is a personal free-time project built with Next.js. It’s a landing page for an e-commerce site. Please don’t judge my skills solely based on this project.
 
 ## Project Structure
-- src----> app------------> (public)->categories
-           |
-           components-----> navigation
-           |                |
-           |                products
-           |                |
-           |                subCategory
-           |              
-           services-------->axiosinstance
-           |                |
-           |                categoryService
-           |                |
-           |                productService       
-           |                
-           styles---------->global.css        
+src
+ └── app
+      └── public
+           └── categories
+ └── components
+      ├── navigation
+      ├── products
+      └── subCategory
+ └── services
+      ├── axiosInstance.ts
+      ├── categoryService.ts
+      └── productService.ts
+ └── styles
+      └── global.css       
 
 ## Tech Stack
 - **Frontend:** Next.js, React, Tailwind CSS
@@ -31,9 +30,10 @@ This is free time next js project don't judge my skills based on this project
 Site Link:-  
 
 ## Features
-- Feature 1 (e.g., Responsive layout)
-- Feature 2 (e.g., Dark Theme)
-- Feature 3 (e.g., API integration)
-- Feature 4 (e.g., Dynamic BreadCrumb)
-
-   
+- Feature 1 (Responsive layout)
+- Feature 2 (Dark Theme)
+- Feature 3 (API integration)
+- Feature 4 (Dynamic BreadCrumb)
+- Feature 5 Hybrid Data Setup: 
+*The first four categories have static subcategories and products.
+*The last four categories are fetched dynamically from the network using Axios.
