@@ -44,7 +44,7 @@ const products:Product[] = [
 export async function updateProductsFromNetwork() {
     let totalProduct = products.length;
     try {
-        const res = await api.get("/products");
+        const res = await api.get("https://fakestoreapi.com/products");
         if (res.status == 200 && res.data && res.data.length > 0) {
             const networkData = res.data;
             for (const ele of networkData) {
