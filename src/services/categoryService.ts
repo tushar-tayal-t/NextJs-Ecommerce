@@ -47,18 +47,27 @@ export async function updateCategorySubCategoryByNetwork() {
     let totalCategory = Category.length;
     let totalSubCategory = SubCategory.length;
     try {
-        const res = await api.get("https://dummyjson.com/products");
-        if (res.status == 200 && res.data && res.data.length > 0) {
-            const networkData = res.data;
-            networkData.map((cat:netWorkDataType)=>{
-                if (!Category.find((val)=> val.category_name == cat.category)) {
-                    totalCategory++;
-                    totalSubCategory++;
-                    Category.push({id_category: totalCategory, category_name: cat.category})
-                    SubCategory.push({id_sub_category: 0, id_category: totalCategory, sub_category_name:'Default Subcategory', image_url:'/not_found_img/no_category.png'});
-                }
-            })
-            return 0;
+         const response = await fetch("https://dummyjson.com/products");
+        if (response.status === 200) {
+            const data = await response.json();
+            console.log("Rohan ", data);
+            if (data && data.length > 0) {
+                data.map((cat) => {
+                    if (!Category.find((val) => val.category_name === cat.category)) {
+                        totalCategory++;
+                        totalSubCategory++;
+                        Category.push({ id_category: totalCategory, category_name: cat.category });
+                        SubCategory.push({
+                            id_sub_category: 0,
+                            id_category: totalCategory,
+                            sub_category_name: 'Default Subcategory',
+                            image_url: '/not_found_img/no_category.png',
+                        });
+                    }
+                });
+            }
+        } else {
+            console.error("Failed to fetch data: ", response.statusText);
         }
     } catch(error: unknown) {
         if (error instanceof Error) {
