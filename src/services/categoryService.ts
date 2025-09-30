@@ -52,36 +52,6 @@ type Product = {
     thumbnail: string;
 };
 
-async function fetchData() {
-    try {
-        const response = await fetch("https://dummyjson.com/products");
-
-        if (response.status === 200) {
-            const data = await response.json();
-
-            if (data.products && data.products.length > 0) {
-                data.products.map((cat: Product) => {
-                    if (!Category.find((val) => val.category_name === cat.category)) {
-                        totalCategory++;
-                        totalSubCategory++;
-                        Category.push({ id_category: totalCategory, category_name: cat.category });
-                        SubCategory.push({
-                            id_sub_category: 0,
-                            id_category: totalCategory,
-                            sub_category_name: 'Default Subcategory',
-                            image_url: '/not_found_img/no_category.png',
-                        });
-                    }
-                });
-            }
-        } else {
-            console.error("Failed to fetch data: ", response.statusText);
-        }
-    } catch (error) {
-        console.error("Error fetching data: ", error);
-    }
-}
-
 const Category:category[] = [
     {id_category: 1, category_name: 'Bags'},
     {id_category: 2, category_name: 'Travel'},
@@ -108,11 +78,12 @@ export async function updateCategorySubCategoryByNetwork() {
     let totalSubCategory = SubCategory.length;
     try {
          const response = await fetch("https://dummyjson.com/products");
+
         if (response.status === 200) {
             const data = await response.json();
-            console.log("Rohan ", data);
-            if (data && data.length > 0) {
-                data.map((cat) => {
+
+            if (data.products && data.products.length > 0) {
+                data.products.map((cat: Product) => {
                     if (!Category.find((val) => val.category_name === cat.category)) {
                         totalCategory++;
                         totalSubCategory++;
