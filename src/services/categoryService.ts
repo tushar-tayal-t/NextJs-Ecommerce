@@ -12,14 +12,74 @@ type subCategory = {
     image_url: string,
 }
 
-type netWorkDataType = {
-    id: number,
-    title: string,
-    price: number,
-    description: string,
-    category: string,
-    image: string,
-    rating?: { rate: number, count: number }
+type Product = {
+    id: number;
+    title: string;
+    description: string;
+    category: string;
+    price: number;
+    discountPercentage: number;
+    rating: number;
+    stock: number;
+    tags: string[];
+    brand: string;
+    sku: string;
+    weight: number;
+    dimensions: {
+        width: number;
+        height: number;
+        depth: number;
+    };
+    warrantyInformation: string;
+    shippingInformation: string;
+    availabilityStatus: string;
+    reviews: Array<{
+        rating: number;
+        comment: string;
+        date: string;
+        reviewerName: string;
+        reviewerEmail: string;
+    }>;
+    returnPolicy: string;
+    minimumOrderQuantity: number;
+    meta: {
+        createdAt: string;
+        updatedAt: string;
+        barcode: string;
+        qrCode: string;
+    };
+    images: string[];
+    thumbnail: string;
+};
+
+async function fetchData() {
+    try {
+        const response = await fetch("https://dummyjson.com/products");
+
+        if (response.status === 200) {
+            const data = await response.json();
+
+            if (data.products && data.products.length > 0) {
+                data.products.map((cat: Product) => {
+                    if (!Category.find((val) => val.category_name === cat.category)) {
+                        totalCategory++;
+                        totalSubCategory++;
+                        Category.push({ id_category: totalCategory, category_name: cat.category });
+                        SubCategory.push({
+                            id_sub_category: 0,
+                            id_category: totalCategory,
+                            sub_category_name: 'Default Subcategory',
+                            image_url: '/not_found_img/no_category.png',
+                        });
+                    }
+                });
+            }
+        } else {
+            console.error("Failed to fetch data: ", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error fetching data: ", error);
+    }
 }
 
 const Category:category[] = [
