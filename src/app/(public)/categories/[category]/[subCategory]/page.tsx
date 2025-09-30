@@ -1,9 +1,10 @@
-import { getCategoryIdByCategoryName, getAllSubCategoryByCategoryId, getSubCategoryIdBySubCategoryName } from "@/services/categoryService";
+import {updateCategorySubCategoryByNetwork, getCategoryIdByCategoryName, getAllSubCategoryByCategoryId, getSubCategoryIdBySubCategoryName } from "@/services/categoryService";
 import { getProductsByCategoryIdSubCategoryId, getDefaultSubCategoryProducts } from "@/services/productService";
 import ClientSubCategory from "./components/clientSubCategory";
 import ClientProductList from "./components/clientProductList";
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string, subCategory:string }> }) {
+  await updateCategorySubCategoryByNetwork();
   let { category, subCategory }  = await params;
   subCategory = decodeURIComponent(subCategory);
   category = decodeURIComponent(category);
