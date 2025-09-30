@@ -47,7 +47,7 @@ export async function updateCategorySubCategoryByNetwork() {
     let totalCategory = Category.length;
     let totalSubCategory = SubCategory.length;
     try {
-        const res = await api.get("https://fakestoreapi.com/products");
+        const res = await api.get("https://dummyjson.com/products");
         if (res.status == 200 && res.data && res.data.length > 0) {
             const networkData = res.data;
             networkData.map((cat:netWorkDataType)=>{
